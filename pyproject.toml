@@ -19,6 +19,7 @@ inky-weather = "inky_dashboard.widgets.weather:main"
 inky-bitcoin = "inky_dashboard.widgets.bitcoin:main"
 inky-emblem = "inky_dashboard.widgets.emblem:main"
 inky-health = "inky_dashboard.widgets.health:main"
+inky-speedtest = "inky_dashboard.widgets.speedtest:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

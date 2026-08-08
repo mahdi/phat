@@ -13,4 +13,4 @@ Environment=PYTHONUNBUFFERED=1
 Environment=PYTHONPATH=@PROJECT_DIR@/src
 Environment=INKY_DASHBOARD_STATE_DIR=@PROJECT_DIR@/var
 ExecStart=@PYTHON@ -m inky_dashboard.rotation --config @PROJECT_DIR@/config/widgets.json
-TimeoutStartSec=120
+TimeoutStartSec=180

@@ -43,6 +43,18 @@
         "-m",
         "inky_dashboard.widgets.health"
       ]
+    },
+    {
+      "id": "speedtest",
+      "name": "Internet speed",
+      "enabled": true,
+      "working_directory": "{project_root}",
+      "timeout_seconds": 150,
+      "command": [
+        "{python}",
+        "-m",
+        "inky_dashboard.widgets.speedtest"
+      ]
     }
   ]
 }
