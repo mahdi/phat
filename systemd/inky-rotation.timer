@@ -1,0 +1,12 @@
+[Unit]
+Description=Rotate the Inky dashboard every three minutes
+
+[Timer]
+OnBootSec=90s
+OnUnitActiveSec=3min
+AccuracySec=5s
+Persistent=true
+Unit=inky-rotation.service
+
+[Install]
+WantedBy=timers.target

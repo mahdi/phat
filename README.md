@@ -1,0 +1,105 @@
+# Inky Dashboard
+
+A compact, internet-connected desk dashboard for a 212×104 Pimoroni Inky pHAT.
+It currently rotates between a London weather screen and a BTC/USD market
+screen every three minutes.
+
+## What it shows
+
+- **Weather:** date, location, weather icon, temperature, feels-like
+  temperature, rain probability, European AQI, daily high/low, three-hour rain
+  outlook, UV index and humidity.
+- **Bitcoin:** BTC/USD price, 24-hour direction and percentage change. A falling
+  price is red; a flat or rising price is black because this panel cannot
+  display green.
+- **Rotation:** an ordered JSON list controls which enabled widget appears next.
+  State survives restarts, failed widgets are retried and a lock prevents
+  overlapping e-ink updates.
+
+Both screens use DejaVu Sans for clean rendering on the panel's limited colour
+palette.
+
+## Hardware and software
+
+- Raspberry Pi with network access
+- Pimoroni Inky pHAT, 212×104 red/black/white model
+- Python 3.9 or newer
+- DejaVu Sans fonts (`fonts-dejavu-core` on Raspberry Pi OS)
+- Pillow and Pimoroni's `inky` Python package
+
+Pimoroni recommends installing its library from the official `inky` repository,
+which also configures the required SPI interface:
+
+```bash
+git clone https://github.com/pimoroni/inky
+cd inky
+./install.sh
+```
+
+## Install on the Pi
+
+Clone this repository, then run the installer with the Python interpreter that
+contains the Inky library:
+
+```bash
+git clone https://github.com/mahdi/phat.git ~/inky-dashboard
+cd ~/inky-dashboard
+INKY_PYTHON=~/.virtualenvs/pimoroni/bin/python ./scripts/install.sh
+```
+
+The installer renders the service template for the current checkout and user,
+disables the obsolete weather-only timer if present, and enables
+`inky-rotation.timer`.
+
+Useful checks:
+
+```bash
+systemctl list-timers inky-rotation.timer
+journalctl -u inky-rotation.service -n 30 --no-pager
+```
+
+## Preview without updating the display
+
+Run either widget with `--preview`:
+
+```bash
+PYTHONPATH=src python3 -m inky_dashboard.widgets.weather --preview weather-preview.png
+PYTHONPATH=src python3 -m inky_dashboard.widgets.bitcoin --preview bitcoin-preview.png
+```
+
+## Add another widget
+
+Add one object to [`config/widgets.json`](config/widgets.json). Commands are
+argument arrays rather than shell strings. `{python}` expands to the active
+Python interpreter and `{project_root}` expands to the repository path.
+
+```json
+{
+  "id": "example",
+  "name": "Example widget",
+  "enabled": true,
+  "working_directory": "{project_root}",
+  "command": ["{python}", "-m", "inky_dashboard.widgets.example"]
+}
+```
+
+The controller automatically includes enabled entries in their listed order;
+no scheduler changes are needed. Set `enabled` to `false` to retain a widget
+without showing it.
+
+## Data sources
+
+- Weather, rain and humidity: [Open-Meteo Weather API](https://open-meteo.com/en/docs)
+- AQI and UV: [Open-Meteo Air Quality API](https://open-meteo.com/en/docs/air-quality-api)
+- BTC/USD 24-hour stats: [Coinbase Exchange API](https://docs.cdp.coinbase.com/api-reference/exchange-api/rest-api/products/get-product-stats)
+
+No API keys, Wi-Fi credentials or other secrets are stored in this repository.
+
+## Tests
+
+```bash
+python3 -m pip install ".[dev]"
+ruff check .
+ruff format --check .
+python3 -m unittest discover -s tests -v
+```

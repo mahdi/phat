@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "inky-dashboard"
+version = "0.1.0"
+description = "Rotating weather and Bitcoin widgets for a Pimoroni Inky pHAT"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["Pillow>=8.1"]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.9"]
+
+[project.scripts]
+inky-rotate = "inky_dashboard.rotation:main"
+inky-weather = "inky_dashboard.widgets.weather:main"
+inky-bitcoin = "inky_dashboard.widgets.bitcoin:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I"]

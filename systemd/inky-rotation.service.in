@@ -1,0 +1,16 @@
+[Unit]
+Description=Display the next Inky dashboard widget
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=@USER@
+Group=@GROUP@
+SupplementaryGroups=gpio spi i2c
+WorkingDirectory=@PROJECT_DIR@
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=@PROJECT_DIR@/src
+Environment=INKY_DASHBOARD_STATE_DIR=@PROJECT_DIR@/var
+ExecStart=@PYTHON@ -m inky_dashboard.rotation --config @PROJECT_DIR@/config/widgets.json
+TimeoutStartSec=120

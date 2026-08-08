@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.DS_Store
+.venv/
+build/
+dist/
+local-backups/
+var/
+*-preview.png
+weather-cache.json
+air-quality-cache.json
+rotation-state.json
+rotation.lock

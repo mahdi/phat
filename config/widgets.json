@@ -1,0 +1,26 @@
+{
+  "widgets": [
+    {
+      "id": "weather",
+      "name": "London weather",
+      "enabled": true,
+      "working_directory": "{project_root}",
+      "command": [
+        "{python}",
+        "-m",
+        "inky_dashboard.widgets.weather"
+      ]
+    },
+    {
+      "id": "bitcoin",
+      "name": "Bitcoin price",
+      "enabled": true,
+      "working_directory": "{project_root}",
+      "command": [
+        "{python}",
+        "-m",
+        "inky_dashboard.widgets.bitcoin"
+      ]
+    }
+  ]
+}
