@@ -13,6 +13,14 @@ three minutes.
 | `emblem` | Lion and Sun | The supplied vector artwork, scaled proportionally, thresholded for crisp e-ink edges and centred in red. |
 | `health` | Pi health | CPU temperature, uptime, one-minute load, memory and storage use, Wi-Fi signal, IP address and an at-a-glance health status. |
 
+## Widget previews
+
+| London weather | BTC/USD market |
+| :---: | :---: |
+| ![London weather widget](docs/previews/weather.png) | ![BTC/USD market widget](docs/previews/bitcoin.png) |
+| Lion and Sun | Pi health |
+| ![Lion and Sun emblem widget](docs/previews/emblem.png) | ![Raspberry Pi health widget](docs/previews/health.png) |
+
 The ordered list in [`config/widgets.json`](config/widgets.json) controls which
 enabled widget appears next. State survives restarts, failed widgets are retried
 and a lock prevents overlapping e-ink updates. The text-based widgets use DejaVu
