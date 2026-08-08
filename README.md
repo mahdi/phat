@@ -1,8 +1,8 @@
 # Inky Dashboard
 
 A compact, internet-connected desk dashboard for a 212×104 Pimoroni Inky pHAT.
-It currently rotates between a London weather screen and a BTC/USD market
-screen every three minutes.
+It currently rotates among a London weather screen, a BTC/USD market screen and
+a centred Lion and Sun emblem every three minutes.
 
 ## What it shows
 
@@ -12,6 +12,8 @@ screen every three minutes.
 - **Bitcoin:** BTC/USD price, 24-hour direction and percentage change. A falling
   price is red; a flat or rising price is black because this panel cannot
   display green.
+- **Emblem:** the supplied Lion and Sun vector artwork, scaled proportionally,
+  thresholded for crisp e-ink edges and centred in red.
 - **Rotation:** an ordered JSON list controls which enabled widget appears next.
   State survives restarts, failed widgets are retried and a lock prevents
   overlapping e-ink updates.
@@ -65,6 +67,7 @@ Run either widget with `--preview`:
 ```bash
 PYTHONPATH=src python3 -m inky_dashboard.widgets.weather --preview weather-preview.png
 PYTHONPATH=src python3 -m inky_dashboard.widgets.bitcoin --preview bitcoin-preview.png
+PYTHONPATH=src python3 -m inky_dashboard.widgets.emblem --preview emblem-preview.png
 ```
 
 ## Add another widget

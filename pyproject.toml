@@ -17,9 +17,13 @@ dev = ["ruff>=0.9"]
 inky-rotate = "inky_dashboard.rotation:main"
 inky-weather = "inky_dashboard.widgets.weather:main"
 inky-bitcoin = "inky_dashboard.widgets.bitcoin:main"
+inky-emblem = "inky_dashboard.widgets.emblem:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+inky_dashboard = ["assets/*.png", "assets/*.svg"]
 
 [tool.ruff]
 target-version = "py39"

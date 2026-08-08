@@ -21,6 +21,17 @@
         "-m",
         "inky_dashboard.widgets.bitcoin"
       ]
+    },
+    {
+      "id": "emblem",
+      "name": "Lion and Sun emblem",
+      "enabled": true,
+      "working_directory": "{project_root}",
+      "command": [
+        "{python}",
+        "-m",
+        "inky_dashboard.widgets.emblem"
+      ]
     }
   ]
 }
