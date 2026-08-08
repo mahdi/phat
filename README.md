@@ -1,6 +1,8 @@
 # Inky Dashboard
 
-A compact, internet-connected desk dashboard for a 212×104 Pimoroni Inky pHAT.
+A compact, internet-connected desk dashboard for the original 212×104
+[Pimoroni Inky pHAT](https://shop.pimoroni.com/products/inky-phat), connected to
+a [Raspberry Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/).
 It rotates among weather, market, artwork and Raspberry Pi health widgets every
 three minutes.
 
@@ -28,11 +30,21 @@ Sans for clean rendering on the panel's limited colour palette.
 
 ## Hardware and software
 
-- Raspberry Pi with network access
-- Pimoroni Inky pHAT, 212×104 red/black/white model
+- [Raspberry Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/),
+  or another network-connected Raspberry Pi with a fitted 40-pin GPIO header
+- Original [Pimoroni Inky pHAT](https://shop.pimoroni.com/products/inky-phat),
+  212×104 red/black/white model
+- MicroSD card with [Raspberry Pi OS](https://www.raspberrypi.com/software/)
+- Suitable micro-USB power supply
 - Python 3.9 or newer
 - DejaVu Sans fonts (`fonts-dejavu-core` on Raspberry Pi OS)
 - Pillow and Pimoroni's `inky` Python package
+
+> [!IMPORTANT]
+> Pimoroni's current retail Inky pHAT is a newer 250×122 four-colour model. This
+> repository is calibrated for the original 212×104 red/black/white revision;
+> the current model is not yet a tested drop-in replacement and would need
+> display-driver and layout adaptations.
 
 Pimoroni recommends installing its library from the official `inky` repository,
 which also configures the required SPI interface:
