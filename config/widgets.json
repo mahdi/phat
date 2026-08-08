@@ -32,6 +32,17 @@
         "-m",
         "inky_dashboard.widgets.emblem"
       ]
+    },
+    {
+      "id": "health",
+      "name": "Pi health",
+      "enabled": true,
+      "working_directory": "{project_root}",
+      "command": [
+        "{python}",
+        "-m",
+        "inky_dashboard.widgets.health"
+      ]
     }
   ]
 }

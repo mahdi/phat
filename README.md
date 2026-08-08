@@ -1,8 +1,8 @@
 # Inky Dashboard
 
 A compact, internet-connected desk dashboard for a 212×104 Pimoroni Inky pHAT.
-It currently rotates among a London weather screen, a BTC/USD market screen and
-a centred Lion and Sun emblem every three minutes.
+It rotates among weather, market, artwork and Raspberry Pi health widgets every
+three minutes.
 
 ## Available widgets
 
@@ -11,6 +11,7 @@ a centred Lion and Sun emblem every three minutes.
 | `weather` | London weather | Date, location, weather icon, temperature, feels-like temperature, rain probability, European AQI, daily high/low, three-hour rain outlook, UV index and humidity. |
 | `bitcoin` | BTC/USD market | Current price, 24-hour direction and percentage change. A falling price is red; a flat or rising price is black because this panel cannot display green. |
 | `emblem` | Lion and Sun | The supplied vector artwork, scaled proportionally, thresholded for crisp e-ink edges and centred in red. |
+| `health` | Pi health | CPU temperature, uptime, one-minute load, memory and storage use, Wi-Fi signal, IP address and an at-a-glance health status. |
 
 The ordered list in [`config/widgets.json`](config/widgets.json) controls which
 enabled widget appears next. State survives restarts, failed widgets are retried
@@ -64,6 +65,7 @@ Run any widget with `--preview`:
 PYTHONPATH=src python3 -m inky_dashboard.widgets.weather --preview weather-preview.png
 PYTHONPATH=src python3 -m inky_dashboard.widgets.bitcoin --preview bitcoin-preview.png
 PYTHONPATH=src python3 -m inky_dashboard.widgets.emblem --preview emblem-preview.png
+PYTHONPATH=src python3 -m inky_dashboard.widgets.health --preview health-preview.png
 ```
 
 ## Add another widget
