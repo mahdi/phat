@@ -4,22 +4,18 @@ A compact, internet-connected desk dashboard for a 212×104 Pimoroni Inky pHAT.
 It currently rotates among a London weather screen, a BTC/USD market screen and
 a centred Lion and Sun emblem every three minutes.
 
-## What it shows
+## Available widgets
 
-- **Weather:** date, location, weather icon, temperature, feels-like
-  temperature, rain probability, European AQI, daily high/low, three-hour rain
-  outlook, UV index and humidity.
-- **Bitcoin:** BTC/USD price, 24-hour direction and percentage change. A falling
-  price is red; a flat or rising price is black because this panel cannot
-  display green.
-- **Emblem:** the supplied Lion and Sun vector artwork, scaled proportionally,
-  thresholded for crisp e-ink edges and centred in red.
-- **Rotation:** an ordered JSON list controls which enabled widget appears next.
-  State survives restarts, failed widgets are retried and a lock prevents
-  overlapping e-ink updates.
+| ID | Widget | What it shows |
+| --- | --- | --- |
+| `weather` | London weather | Date, location, weather icon, temperature, feels-like temperature, rain probability, European AQI, daily high/low, three-hour rain outlook, UV index and humidity. |
+| `bitcoin` | BTC/USD market | Current price, 24-hour direction and percentage change. A falling price is red; a flat or rising price is black because this panel cannot display green. |
+| `emblem` | Lion and Sun | The supplied vector artwork, scaled proportionally, thresholded for crisp e-ink edges and centred in red. |
 
-Both screens use DejaVu Sans for clean rendering on the panel's limited colour
-palette.
+The ordered list in [`config/widgets.json`](config/widgets.json) controls which
+enabled widget appears next. State survives restarts, failed widgets are retried
+and a lock prevents overlapping e-ink updates. The text-based widgets use DejaVu
+Sans for clean rendering on the panel's limited colour palette.
 
 ## Hardware and software
 
@@ -62,7 +58,7 @@ journalctl -u inky-rotation.service -n 30 --no-pager
 
 ## Preview without updating the display
 
-Run either widget with `--preview`:
+Run any widget with `--preview`:
 
 ```bash
 PYTHONPATH=src python3 -m inky_dashboard.widgets.weather --preview weather-preview.png
