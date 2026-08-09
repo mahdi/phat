@@ -55,6 +55,17 @@
         "-m",
         "inky_dashboard.widgets.speedtest"
       ]
+    },
+    {
+      "id": "codex_usage",
+      "name": "Codex usage",
+      "enabled": true,
+      "working_directory": "{project_root}",
+      "command": [
+        "{python}",
+        "-m",
+        "inky_dashboard.widgets.codex_usage"
+      ]
     }
   ]
 }

@@ -22,7 +22,7 @@ def sample_stats(**changes):
         "memory_percent": 44.1,
         "disk_percent": 13.0,
         "wifi_dbm": -55.0,
-        "ip_address": "192.168.1.101",
+        "ip_address": "192.0.2.10",
     }
     values.update(changes)
     return HealthStats(**values)

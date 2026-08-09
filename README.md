@@ -3,8 +3,8 @@
 A compact, internet-connected desk dashboard for the original 212×104
 [Pimoroni Inky pHAT](https://shop.pimoroni.com/products/inky-phat), connected to
 a [Raspberry Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/).
-It rotates among weather, market, artwork, Raspberry Pi health and internet
-speed widgets every three minutes.
+It rotates among weather, market, artwork, Raspberry Pi health, internet speed
+and Codex usage widgets every three minutes.
 
 ## Available widgets
 
@@ -15,6 +15,7 @@ speed widgets every three minutes.
 | `emblem` | Lion and Sun | The supplied vector artwork, scaled proportionally, thresholded for crisp e-ink edges and centred in red. |
 | `health` | Pi health | CPU temperature, uptime, one-minute load, memory and storage use, Wi-Fi signal, IP address and an at-a-glance health status. |
 | `speedtest` | Internet speed | Internet provider, cached Pi Wi-Fi download and upload speeds, ping and the time of the latest Ookla Speedtest. |
+| `codex_usage` | Codex usage | Remaining Codex allowance, the next quota reset, ChatGPT plan and the age of a credential-free snapshot supplied by a trusted companion computer. |
 
 ## Widget previews
 
@@ -23,8 +24,8 @@ speed widgets every three minutes.
 | ![London weather widget](docs/previews/weather.png) | ![BTC/USD market widget](docs/previews/bitcoin.png) |
 | Lion and Sun | Pi health |
 | ![Lion and Sun emblem widget](docs/previews/emblem.png) | ![Raspberry Pi health widget](docs/previews/health.png) |
-| Internet speed | |
-| ![Internet speed widget](docs/previews/speedtest.png) | |
+| Internet speed | Codex usage |
+| ![Internet speed widget](docs/previews/speedtest.png) | ![Codex usage widget](docs/previews/codex-usage.png) |
 
 The ordered list in [`config/widgets.json`](config/widgets.json) controls which
 enabled widget appears next. State survives restarts, failed widgets are retried
@@ -43,6 +44,8 @@ Sans for clean rendering on the panel's limited colour palette.
 - DejaVu Sans fonts (`fonts-dejavu-core` on Raspberry Pi OS)
 - Pillow and Pimoroni's `inky` Python package
 - Ookla Speedtest CLI (required only by the `speedtest` widget)
+- An authenticated Codex CLI on a trusted companion computer (required only to
+  refresh the `codex_usage` snapshot)
 
 > [!IMPORTANT]
 > Pimoroni's current retail Inky pHAT is a newer 250×122 four-colour model. This
@@ -86,6 +89,26 @@ Pi's network hardware rather than representing the maximum speed of the
 broadband plan. In particular, the original Pi Zero W has single-band 2.4 GHz
 Wi-Fi and cannot saturate a modern fibre connection.
 
+### Codex usage bridge
+
+Codex exposes ChatGPT allowance windows through its documented
+[`account/rateLimits/read`](https://learn.chatgpt.com/docs/app-server#6-rate-limits-chatgpt)
+app-server method. Run the sync helper on a computer where Codex is already
+authenticated; it deliberately sends only the plan name, percentages, reset
+times and snapshot time to the Pi:
+
+```bash
+PYTHONPATH=src python3 -m inky_dashboard.codex_sync \
+  --destination pi@raspberrypi.local:/home/pi/inky-dashboard/var/codex-usage.json \
+  --identity-file ~/.ssh/id_ed25519
+```
+
+Schedule that command every 15 minutes using the trusted computer's task
+scheduler. No ChatGPT access or refresh token is installed on the Pi. If the
+companion computer is offline, the last result remains visible and the widget
+marks it `STALE` after six hours. Codex and ChatGPT Work share plan usage, as
+described in the [official pricing documentation](https://learn.chatgpt.com/docs/pricing).
+
 Useful checks:
 
 ```bash
@@ -103,6 +126,7 @@ PYTHONPATH=src python3 -m inky_dashboard.widgets.bitcoin --preview bitcoin-previ
 PYTHONPATH=src python3 -m inky_dashboard.widgets.emblem --preview emblem-preview.png
 PYTHONPATH=src python3 -m inky_dashboard.widgets.health --preview health-preview.png
 PYTHONPATH=src python3 -m inky_dashboard.widgets.speedtest --preview speedtest-preview.png --demo
+PYTHONPATH=src python3 -m inky_dashboard.widgets.codex_usage --preview codex-preview.png --demo
 ```
 
 ## Add another widget
@@ -131,10 +155,14 @@ without showing it.
 - AQI and UV: [Open-Meteo Air Quality API](https://open-meteo.com/en/docs/air-quality-api)
 - BTC/USD 24-hour stats: [Coinbase Exchange API](https://docs.cdp.coinbase.com/api-reference/exchange-api/rest-api/products/get-product-stats)
 - Internet performance and provider: [Ookla Speedtest CLI](https://www.speedtest.net/apps/cli)
+- Codex allowance: [Codex app-server](https://learn.chatgpt.com/docs/app-server#6-rate-limits-chatgpt)
 
 No API keys, Wi-Fi credentials or other secrets are stored in this repository.
 Speedtest and the Speedtest logo are trademarks of Ookla and are used here to
 identify the service that supplies the measurements.
+
+Codex and the Codex logo are trademarks of OpenAI and are used here to identify
+the service whose usage allowance is displayed.
 
 ## Tests
 
